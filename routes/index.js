@@ -20,7 +20,6 @@ function controllers(params){
 		last_name: String,
 		fb: Number,
 		phone: String,
-		email: String,
 		challenges: [mongoose.Schema.Types.ObjectId],
 		successes: Number,
 		failures: Number
@@ -28,7 +27,10 @@ function controllers(params){
 	var Challenge = mongoose.model('Challenge', challengeSchema);
 	var User = mongoose.model('User', userSchema);
 	controllers.index = function(req, res){
-		res.render('index', { title: 'Daring' });
+		Challenge.find({ active: 'true' }, function(error, challenges){
+				
+			res.render('index', { title: 'Daring', challenges: challenges });
+		});
 	};
 	controllers.checkUser = function(req, res){
 		var user_id = req.query.user_id;

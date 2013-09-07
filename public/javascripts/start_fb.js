@@ -13,13 +13,12 @@ window.fbAsyncInit = function() {
       var uid = response.authResponse.userID;
       var accessToken = response.authResponse.accessToken;
       FB.api('/me', function(response) {
-        console.log(response);
         $.ajax({
           type:"GET",
           url:"/checkUser",
           data:{user_id: response.id},
           success:function(data){
-            console.log(data);
+            console.log(data.seen);
             if(data.seen == false){
               window.location = "/register";
             } else {
@@ -31,7 +30,7 @@ window.fbAsyncInit = function() {
           }
         });
       });
-    }
+    } else $("#login").css({"display":"inline"});
   });
 };
 

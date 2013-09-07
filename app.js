@@ -36,6 +36,8 @@ app.get('/', controllers.index);
 app.get('/checkUser', controllers.checkUser);
 app.get('/register', controllers.register);
 app.post('/register', controllers.createUser);
+app.get('/challenge', controllers.challenge);
+app.post('/challenge', controllers.createChallenge);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

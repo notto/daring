@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Write a challenge
+  #fb-root
+  script(src='/javascripts/challenge_fb.js')
+  form(method="POST")
+    p Victim
+      select(id = "victim", name = "victim")
+    p Challenge
+      input(id = "challenge", name = "challenge")
+    p Reward
+      select(id = "reward", name = "reward")
+        option(value = "Venmo") Venmo
+        option(value = "Item") Gift
+    p
+      input(id = "challenger", type = "hidden")
+      input(id = "submit", type = "submit")

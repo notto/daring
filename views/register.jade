@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  h1 Complete your registration!
+  #fb-root
+  script
+    console.log('huh');
+    window.fbAsyncInit = function() {
+      // init the FB JS SDK
+      FB.init({
+        appId      : '201887256647649',                        // App ID from the app dashboard
+        channelUrl : '//localhost:3000/channel.html', // Channel file for x-domain comms
+        status     : true,                                 // Check Facebook Login status
+        xfbml      : true                                  // Look for social plugins on the page
+      });
+      // Additional initialization code sfuch as adding Event Listeners goes here
+      FB.getLoginStatus(function(response) {
+        if (response.status !== 'connected' || response.status === 'not_authorized') {
+          window.location = "/";
+        } else {
+          FB.api('/me', function(response){
+            console.log(response);
+            $(document).ready(function(){
+              $("#first_name").val(response.first_name);
+              $("#last_name").val(response.last_name);
+              $("#fb").val(response.id);
+            });
+          });
+        }
+      });
+    };
+
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    
+  form(method="POST")
+    input(id = "cell", name = "cell")
+    input(id = "email", name = "email")
+    input(id = "first_name", name = "first_name", type = "hidden")
+    input(id = "last_name", name = "last_name", type = "hidden")
+    input(id = "fb", name = "fb", type = "hidden")
+    input(type = "submit")

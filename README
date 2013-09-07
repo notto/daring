@@ -1,0 +1,10 @@
+Check this out; I need some sleep.
+Here's a quick overview of how I've organized this Express project:
+1. app.js contains all the routes and is where all the dependencies are imported
+	-- all the require("...") clauses are imports
+	-- all the app.get and app.post calls are routes, corresponding to GET or POST HTTP requests.
+2. /routes/index.js contains all the routes and all the Mongoose models (used to structure the Mongo database)
+	-- Most routes just render templates as html, with the render call
+	-- checkUser is an asynchronous call, so it just send some data back to the client
+3. /views/ contains all the templates.  I use a template language called Jade.  It's awesome; look it up.
+4. /public/ contains all the static file: JS files, stylesheets, and images, mostly.

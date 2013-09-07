@@ -10,27 +10,16 @@ window.fbAsyncInit = function() {
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
       //authenticated
-      var uid = response.authResponse.userID;
-      var accessToken = response.authResponse.accessToken;
-      FB.api('/me', function(response) {
-        $.ajax({
-          type:"GET",
-          url:"/checkUser",
-          data:{user_id: response.id},
-          success:function(data){
-            console.log(data.seen);
-            if(data.seen == false){
-              window.location = "/register";
-            } else {
-              $("#login").remove();
-            }
-          },
-          failure:function(){
-            window.location = "/register";
+      FB.api('/'+$("#user-id").attr("data-user")+'/feed', 'post', {message:$("#message-data").attr("data-message")}, function(response) {
+          if (!response || response.error) {
+              console.log(response.error);
+          } else {
+              console.log('cool');
           }
-        });
+          window.location = "/";
       });
-    } else $("#login").css({"display":"inline"});
+    }
+    window.location = "/";
   });
 };
 
@@ -42,9 +31,3 @@ window.fbAsyncInit = function() {
    js.src = "//connect.facebook.net/en_US/all.js";
    fjs.parentNode.insertBefore(js, fjs);
  }(document, 'script', 'facebook-jssdk'));
-
-function login(){
-  FB.login(function(){
-    window.location = "/";
-  },{scope: 'publish_stream'});
-}

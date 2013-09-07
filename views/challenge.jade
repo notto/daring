@@ -5,14 +5,30 @@ block content
   #fb-root
   script(src='/javascripts/challenge_fb.js')
   form(method="POST")
-    p Victim
-      select(id = "victim", name = "victim")
-    p Challenge
-      input(id = "challenge", name = "challenge")
-    p Reward
-      select(id = "reward", name = "reward")
-        option(value = "Venmo") Venmo
-        option(value = "Item") Gift
-    p
-      input(id = "challenger", type = "hidden")
-      input(id = "submit", type = "submit")
+    table
+      tr
+        td Victim
+        td
+          select(id = "victim", name = "victim")
+      tr
+        td Challenge
+        td 
+          input(id = "challenge", name = "challenge", size = "35")
+      tr
+        td Reward
+        td 
+          select(id = "reward", name = "reward")
+            option(value = "Venmo") Venmo
+            option(value = "Other") Gift
+        td
+          |$
+          input(id = "rewardValue", name = "rewardValue")
+      tr
+        td Send through
+        td Facebook
+          input(type = "radio", name = "sendTo", value = "Facebook")
+          br
+          |SMS
+          input(type = "radio", name = "sendTo", value = "SMS") SMS
+    input(id = "challenger", name = "challenger", type = "hidden")
+    input(id = "submit", type = "submit")

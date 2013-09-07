@@ -8,6 +8,7 @@ function controllers(params){
 		_victimId: mongoose.Schema.Types.ObjectId,
 		challenge: String,
 		reward: String,
+		rewardValue: Number,
 		proofSource: String,
 		proofLikes: Number,
 		proofDislikes: Number,
@@ -29,8 +30,9 @@ function controllers(params){
 	controllers.index = function(req, res){
 		Challenge.find({ active: 'true' }, function(error, challenges){
 				
-			res.render('index', { title: 'Daring', challenges: challenges });
+			res.render('index', { title: 'Daring', challenges: challenges,  });
 		});
+
 	};
 	controllers.checkUser = function(req, res){
 		var user_id = req.query.user_id;
@@ -57,15 +59,17 @@ function controllers(params){
 	}
 	controllers.createChallenge = function(req, res){
 		var victimId = req.body.victim;
-		console.log(victimId);
 		var challengerId = req.body.challenger;
+		console.log(challengerId);
 		var challenge = req.body.challenge;
 		var reward = req.body.reward;
+		var rewardValue = req.body.rewardValue;
 		var victimNumber = "";
-		User.find({fb: victimId}, function(err, users){
-			if(err)console.log("damn");
+		var sendTo = req.body.sendTo;
+		User.find({fb: victimId}, function(err, victims){
+			if(err)res.redirect("/");
 			else{
-				if(users.length > 0) victimNumber = users[0].phone;
+				if(victims.length > 0) victimNumber = victims[0].phone;
 			}
 			var challengerName = "Anonymous";
 			User.find({fb: challengerId}, function(err, users){
@@ -73,13 +77,21 @@ function controllers(params){
 				else{
 					if(users.length > 0) challengerName = users[0].first_name + " " + users[0].last_name;
 				}
-				if(victimNumber !== ""){
-					console.log(victimNumber);
+				var message = challengerName + " sent you a challenge: " + challenge;
+				if(reward != null && reward != ""){
+					if(reward == "Venmo"){
+						message += " - Reward: $"+rewardValue;
+					} else {
+						message += " - Reward: "+reward;
+					}
+				}
+				if(sendTo == "SMS" && victimNumber !== ""){
+					//Send challenge by text
 					client.sendSms({
 
 						to:'+1'+victimNumber, // Any number Twilio can deliver to
 					    from: '+15717485472', // A number you bought from Twilio and can use for outbound communication
-					    body: challengerName + " sent you a challenge: " + challenge
+					    body: message
 
 					}, function(err, responseData) { //this function is executed when a response is received from Twilio
 
@@ -91,16 +103,22 @@ function controllers(params){
 				        	console.log(err);
 				    	}
 				    	else{
+				    		var newChallenge = new Challenge({_challengerId:users[0]._id, _victimId:victims[0]._id, challenge:challenge, reward:reward, rewardValue:rewardValue, active:true});
+				    		newChallenge.save(function(err, theChallenge){
+				    			if(err) console.log(err);
+				    			else console.log(theChallenge);
+				    		});
 				    		console.log(responseData.from); // outputs "+14506667788"
 				        	console.log(responseData.body); // outputs "word to your mother."
 						}
+						res.redirect('/');
 					});
+				} else {
+					//Send challenge to FB
+					res.render('feedPost', {title:"Daring", message:message, user_id:victimID});
 				}
 			});
 		});
-		
-		
-		res.redirect("/");
 	}
 	return controllers;
 }

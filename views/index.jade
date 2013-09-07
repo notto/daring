@@ -5,5 +5,15 @@ block content
   script(src="/javascripts/start_fb.js")
   a#login(href="javascript:login()")
     img(src="/images/fblogin.png", style="width:200px")
-  h1= title
-  p Welcome to #{title}
+  br
+  header
+    h1(style="display:inline")= title
+    button Challenge your friends!
+    button My challenges
+    button All-time favorites
+  br
+  div.masonry
+    div.item
+      h3 I bet you won't pee on your math professor during class!!!
+      h2 $15
+    

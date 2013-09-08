@@ -4,9 +4,8 @@ function controllers(params){
 	var client = params.client;
 	//Mongoose models
 	var challengeSchema = mongoose.Schema({
-		_id: Number,
-		_challengerId: Number,
-		_victimId: Number,
+		_challengerId: String,
+		_victimId: String,
 		challenge: String,
 		reward: String,
 		rewardValue: Number,
@@ -18,12 +17,11 @@ function controllers(params){
 		comments: [String]
 	});
 	var userSchema = mongoose.Schema({
-		_id: Number,
 		first_name: String,
 		last_name: String,
 		fb: Number,
 		phone: String,
-		challenges: Number,
+		challenges: String,
 		successes: Number,
 		failures: Number
 	});
@@ -49,7 +47,7 @@ function controllers(params){
 		var challengeId = req.params.challengeId;
 		Challenge.find({ active: 'true', _id: challengeId  }, function(err, challenges){
 			if (err) console.log(err);
-			res.render('challenge', { title: 'Daring', challenges: challenges } );
+			res.render('challenge', { title: 'Daring', challenges: challenges, challengeId: challengeId } );
 		});
 	};
 	controllers.checkUser = function(req, res){

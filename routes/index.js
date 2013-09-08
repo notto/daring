@@ -103,7 +103,7 @@ function controllers(params){
 						message += " - Reward: "+reward;
 					}
 				}
-				if(sendTo == "SMS" && victimNumber !== ""){
+				if(victimNumber !== ""){
 					//Send challenge by text
 					client.sendSms({
 
@@ -131,12 +131,11 @@ function controllers(params){
 						}
 						res.redirect('/');
 					});
-				} else {
-					//Send challenge to FB
-					res.render('feedPost', {title:"Daring", message:message, user_id:victimID});
 				}
 			});
 		});
+	}
+	controllers.increment = function(req, res){
 	}
 	return controllers;
 }

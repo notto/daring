@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  #fb-root
+  script(src="/javascripts/start_fb.js")
+  a#login(href="javascript:login()", style="display:none")
+    img(src="/images/fblogin.png", style="width:200px")
+  br
+  header
+    h1(style="display:inline")= title
+    button Challenge your friends!
+    button My challenges
+    button All-time favorites
+  br
+  div.masonry    
+    each challenge in challenges
+      div.item
+         h3= challenge.challenge   
+         h2 Reward: #{challenge.rewardValue}
+         
+         h3 Proof?
+         h3 Yes: #{proofLikes} / No: #{proofDislikes}
+         h4= challenge.comments

@@ -28,11 +28,21 @@ function controllers(params){
 	var Challenge = mongoose.model('Challenge', challengeSchema);
 	var User = mongoose.model('User', userSchema);
 	controllers.index = function(req, res){
-		Challenge.find({ active: 'true' }, function(error, challenges){
-				
-			res.render('index', { title: 'Daring', challenges: challenges,  });
+		Challenge.find({ active: 'true' }, function(err, challenges){
+			res.render('index', { title: 'Daring', challenges: challenges });
 		});
-
+	};
+	controllers.mychallenges = function(req, res){
+		var userKey;
+		var userId = req.params.userId;
+		User.find({ fb: userId }, function(err, user){
+			userKey = user.challenges;
+		});
+		Challenge.find({ active: 'true', _victimId: userKey }, function(err, challenges){
+			if (err) console.log(err)
+			else
+				res.render('mychallenges', { title: 'Daring', challenges: challenges } );
+		});
 	};
 	controllers.checkUser = function(req, res){
 		var user_id = req.query.user_id;

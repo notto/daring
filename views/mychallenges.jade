@@ -16,8 +16,16 @@ block content
     each challenge in challenges
       div.item
          h3= challenge.challenge   
-         h2 Reward: #{challenge.rewardValue}
-         
+         div.prize
+           h2 Reward: 
+           if challenge.reward=='Venmo'
+             h2 $
+           h2 #{challenge.rewardValue}
+         br
          h3 Proof?
-         h3 Yes: #{proofLikes} / No: #{proofDislikes}
+         div.proof
+           h3 Yes:
+           h3= challenge.proofLikes
+           h3  / No:
+           h3= challenge.proofDislikes
          h4= challenge.comments

@@ -4,6 +4,20 @@ function sortByName(a, b) {
     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 }
 
+$(document).ready(function(){
+  $("#challenge").focus();
+  $("#reward").blur(function(){
+    if($(this).val() == "" || $(this).val().toLowerCase() == "venmo"){
+      $(this).val("Venmo");
+      $("#rewardValue").show();
+    } else if($(this).val().toLowerCase() == "cash") {
+      $("#rewardValue").show();
+    } else {
+      $("#rewardValue").hide();
+    }
+  });
+});
+
 window.fbAsyncInit = function() {
   // init the FB JS SDK
   FB.init({

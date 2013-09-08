@@ -13,6 +13,8 @@ function controllers(params){
 		proofSource: String,
 		proofLikes: Number,
 		proofDislikes: Number,
+		minutesRemaining: Number,
+		proving: Boolean,
 		active: Boolean,	
 		success: Boolean,
 		comments: [String]

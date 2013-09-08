@@ -121,7 +121,7 @@ function controllers(params){
 				        	console.log(err);
 				    	}
 				    	else{
-				    		var newChallenge = new Challenge({_challengerId:users[0]._id, _victimId:victims[0]._id, challenge:challenge, reward:reward, rewardValue:rewardValue, active:true});
+				    		var newChallenge = new Challenge({_challengerId:users[0]._id, _victimId:victims[0]._id, challenge:challenge, reward:reward, rewardValue:rewardValue, active:true, proofLikes:0, proofDislikes:0});
 				    		newChallenge.save(function(err, theChallenge){
 				    			if(err) console.log(err);
 				    			else console.log(theChallenge);

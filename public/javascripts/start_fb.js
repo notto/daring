@@ -18,7 +18,6 @@ window.fbAsyncInit = function() {
           url:"/checkUser",
           data:{user_id: response.id},
           success:function(data){
-            console.log(data.seen);
             if(data.seen == false){
               window.location = "/register";
             } else {
@@ -48,3 +47,18 @@ function login(){
     window.location = "/";
   },{scope: 'publish_stream'});
 }
+
+$(document).ready(function(){
+  $(".up").click(function(){
+    var number = parseInt($(this).text());
+    $(this).text(number+1);
+    $.post("/", {isUp:true, id:$(this).parent().attr("data-id")});
+    return false;
+  });
+  $(".down").click(function(){
+    var number = parseInt($(this).text());
+    $(this).text(number+1);
+    $.post("/", {isUp:false, id:$(this).parent().attr("data-id")});
+    return false;
+  });
+});

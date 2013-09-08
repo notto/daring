@@ -17,18 +17,9 @@ block content
       tr
         td Reward
         td 
-          select(id = "reward", name = "reward")
-            option(value = "Venmo") Venmo
-            option(value = "Other") Gift
-        td
+          input(id = "reward", name = "reward", value = "Venmo")
+        td#rewardValue
           |$
-          input(id = "rewardValue", name = "rewardValue")
-      tr
-        td Send through
-        td Facebook
-          input(type = "radio", name = "sendTo", value = "Facebook")
-          br
-          |SMS
-          input(type = "radio", name = "sendTo", value = "SMS") SMS
+          input(name = "rewardValue")
     input(id = "challenger", name = "challenger", type = "hidden")
     input(id = "submit", type = "submit")

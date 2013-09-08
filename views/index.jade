@@ -5,27 +5,26 @@ block content
   script(src="/javascripts/start_fb.js")
   a#login(href="javascript:login()", style="display:none")
     img(src="/images/fblogin.png", style="width:200px")
-  br
-  header
-    h1(style="display:inline")= title
-    button Challenge your friends!
-    button My challenges
-    button All-time favorites
-  br
+  #header
+    ul.headList
+      li
+        h1#head(style="display:inline")= title
+      li
+        h1
+          a(href="/newchallenge") Challenge	
   div.masonry    
     each challenge in challenges
       div.item
          h3= challenge.challenge   
          div.prize
-           h2 Reward: 
-           if challenge.reward=='Venmo'
-             h2 $
-           h2 #{challenge.rewardValue}
+           h3 Reward: 
+             if challenge.reward=='Venmo'
+               |$#{challenge.rewardValue}
          br
          h3 Proof?
-         div.proof
-           h3 Yes:
-           h3= challenge.proofLikes
-           h3  / No:
-           h3= challenge.proofDislikes
-         h4= challenge.comments
+         div.proof(data-id= challenge._id)
+           h3.vote.up= challenge.proofLikes
+           h3  + 
+           h3  / - 
+           h3.vote.down= challenge.proofDislikes
+         h3= challenge.comments

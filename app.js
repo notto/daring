@@ -33,6 +33,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', controllers.index);
+app.post('/', controllers.increment);
 app.get('/checkUser', controllers.checkUser);
 app.get('/register', controllers.register);
 app.post('/register', controllers.createUser);

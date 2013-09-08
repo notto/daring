@@ -5,3 +5,37 @@ body {
 a {
   color: #00b7ff;
 }
+h2,
+h3 {
+  margin: 5px auto;
+  text-align: center;
+}
+.prize,
+.proof {
+  margin: 5px auto;
+  text-align: center;
+}
+.prize h2,
+.proof h3 {
+  display: inline;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+}
+.masonry {
+  background: #eee;
+  max-width: 800px;
+}
+.masonry .item {
+  width: 250px;
+  float: left;
+  background: #888;
+  border: 2px solid #333;
+  border-color: rgba(0,0,0,0.5);
+  border-radius: 5px;
+}

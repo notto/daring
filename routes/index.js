@@ -4,8 +4,9 @@ function controllers(params){
 	var client = params.client;
 	//Mongoose models
 	var challengeSchema = mongoose.Schema({
-		_challengerId: mongoose.Schema.Types.ObjectId,
-		_victimId: mongoose.Schema.Types.ObjectId,
+		_id: Number,
+		_challengerId: Number,
+		_victimId: Number,
 		challenge: String,
 		reward: String,
 		rewardValue: Number,
@@ -17,11 +18,12 @@ function controllers(params){
 		comments: [String]
 	});
 	var userSchema = mongoose.Schema({
+		_id: Number,
 		first_name: String,
 		last_name: String,
 		fb: Number,
 		phone: String,
-		challenges: [mongoose.Schema.Types.ObjectId],
+		challenges: Number,
 		successes: Number,
 		failures: Number
 	});
@@ -39,9 +41,15 @@ function controllers(params){
 			userKey = user.challenges;
 		});
 		Challenge.find({ active: 'true', _victimId: userKey }, function(err, challenges){
-			if (err) console.log(err)
-			else
-				res.render('mychallenges', { title: 'Daring', challenges: challenges } );
+			if (err) console.log(err);
+			res.render('mychallenges', { title: 'Daring', challenges: challenges } );
+		});
+	};
+	controllers.challenge = function(req, res){
+		var challengeId = req.params.challengeId;
+		Challenge.find({ active: 'true', _id: challengeId  }, function(err, challenges){
+			if (err) console.log(err);
+			res.render('challenge', { title: 'Daring', challenges: challenges } );
 		});
 	};
 	controllers.checkUser = function(req, res){
@@ -64,8 +72,8 @@ function controllers(params){
 		thisUser.save();
 		res.render('index', {title: 'Daring'});
 	}
-	controllers.challenge = function(req, res){
-		res.render('challenge', {title: 'Daring'});
+	controllers.newChallenge = function(req, res){
+		res.render('newChallenge', {title: 'Daring'});
 	}
 	controllers.createChallenge = function(req, res){
 		var victimId = req.body.victim;

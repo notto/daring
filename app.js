@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -8,9 +7,9 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var app = express();
-var client = require('twilio')('ACc0f7a6bb25312b649831d35bb25ace5e', 'cce8908cb5c4c64b39e6ad1b2c96ab6e');
+var client = require('twilio')('', '');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://nwkotto:tr0uTmach1@ds043378.mongolab.com:43378/daring_dev');
+mongoose.connect('mongodb://<user>:<password>@ds043378.mongolab.com:43378/daring_dev');
 var controllers = require('./routes')({mongoose: mongoose, client: client});
 
 // all environments
